@@ -241,12 +241,22 @@ SetAccount::preclaim(PreclaimContext const& ctx)
 				 }
 			}
 		}
-        else if(fMin > 0 && fMin == fMax)
-        {
-            if(ctx.tx.getFieldU32(sfTransferRate) > QUALITY_ONE || sle->getFieldU32(sfTransferRate) > QUALITY_ONE)
-            {
-				return temBAD_FEE_MISMATCH_TRANSFER_RATE;
-            }
+       	else if (fMin > 0 && fMin == fMax)
+		{
+			if (ctx.tx.isFieldPresent(sfTransferRate))
+			{
+				if (ctx.tx.getFieldU32(sfTransferRate) > QUALITY_ONE)
+				{
+					return temBAD_FEE_MISMATCH_TRANSFER_RATE;
+				}
+			}
+			else if(sle->isFieldPresent(sfTransferRate))
+			{
+				if (sle->getFieldU32(sfTransferRate) > QUALITY_ONE)
+				{
+					return temBAD_FEE_MISMATCH_TRANSFER_RATE;
+				}
+			}
         }
 	}
     return tesSUCCESS;
