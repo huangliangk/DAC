@@ -24,6 +24,14 @@ sudo ./dacd --conf="/opt/dac/etc/dacd.cfg"  validation_create
 
 ### 2.	配置文件的修改
 所有节点的dacd.cfg都要进行下面的修改：
+1)	字段[node_db]  Linux和Windows配置不同
+
+[node_db]
+```
+  windows平台: type=NuDB
+  Ubuntu平台: type=RocksDB
+```
+
 1)	字段[ips]，添加其它三个节点的ip及端口号5123，如下例所示：
 ```
 [ips]
